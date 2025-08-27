@@ -1,0 +1,234 @@
+{
+  "data": [
+    {
+      "title": "Ana Sayfa Vitrini",
+      "data": [
+        {
+          "title": "İlaniniz Ana Sayfada Yayınlansın",
+          "subtitle": "Istemiyorum",
+          "avatar": "anasayfa",
+          "actionData": [
+            {
+              "title": "Istemiyorum",
+              "selected": true,
+              "icon": "check-circle",
+              "id": "0"
+            },
+            {
+              "title": "1 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+
+              "id": "1"
+            },
+            {
+              "title": "2 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+
+              "id": "2"
+            },
+            {
+              "title": "3 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+              "id": "3"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "title": "Üst Sıradayım",
+      "data": [
+        {
+          "title": "İlaniniz Üst Sıralarda Görüntülensin",
+          "subtitle": "Istemiyorum",
+          "avatar": "ust_sira",
+          "actionData": [
+            {
+              "title": "Istemiyorum",
+              "selected": true,
+              "icon": "check-circle",
+              "id": "0"
+            },
+            {
+              "title": "1 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+
+              "id": "1"
+            },
+            {
+              "title": "2 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+
+              "id": "2"
+            },
+            {
+              "title": "3 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+              "id": "3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kategori Vitrini",
+      "data": [
+        {
+          "title": "İlanınız her gün aıt olduğu kategoride görüntülensin",
+          "subtitle": "Istemiyorum",
+          "avatar": "kategori",
+          "actionData": [
+            {
+              "title": "Istemiyorum",
+              "selected": true,
+              "icon": "check-circle",
+              "id": "0"
+            },
+            {
+              "title": "1 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+
+              "id": "1"
+            },
+            {
+              "title": "2 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+
+              "id": "2"
+            },
+            {
+              "title": "3 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+              "id": "3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Acil İlanlar",
+      "data": [
+        {
+          "title": "İlaniniz üst siralarda görüntülensin istiyorsaniz",
+          "subtitle": "Istemiyorum",
+          "avatar": "acil_ilanlar",
+          "actionData": [
+            {
+              "title": "Istemiyorum",
+              "selected": true,
+              "icon": "check-circle",
+              "id": "0"
+            },
+            {
+              "title": "1 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+
+              "id": "1"
+            },
+            {
+              "title": "2 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+              "id": "2"
+            },
+            {
+              "title": "3 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+              "id": "3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Detaylı Arama Vitrini",
+      "data": [
+        {
+          "title": "Detaylı arama yapan alıcılara kolayca ulaşsın",
+          "subtitle": "Istemiyorum",
+          "avatar": "detayli",
+          "actionData": [
+            {
+              "title": "Istemiyorum",
+              "selected": true,
+              "icon": "check-circle",
+              "id": "0"
+            },
+            {
+              "title": "1 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+
+              "id": "1"
+            },
+            {
+              "title": "2 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+
+              "id": "2"
+            },
+            {
+              "title": "3 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+              "id": "3"
+            }
+          ]
+        }
+      ]
+    },    {
+      "title": "Kalın Yazı & Renkli Çerçeve",
+      "data": [
+        {
+          "title": "İlanınız arama sonuç listelerinde kalın yazı ve renkli çerçeveli görüntülensin",
+          "subtitle": "Istemiyorum",
+          "avatar": "kalin_yazi",
+          "actionData": [
+            {
+              "title": "Istemiyorum",
+              "selected": true,
+              "icon": "check-circle",
+              "id": "0"
+            },
+            {
+              "title": "1 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+
+              "id": "1"
+            },
+            {
+              "title": "2 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+
+              "id": "2"
+            },
+            {
+              "title": "3 Hafta (0 TL)",
+              "selected": false,
+              "icon": "circle",
+              "id": "3"
+            }
+          ]
+        }
+      ]
+    }
+
+
+
+  ]
+}

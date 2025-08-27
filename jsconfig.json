@@ -1,0 +1,44 @@
+{
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": [
+        "app/config/*"
+      ],
+      "@components/*": [
+        "app/components/*"
+      ],
+      "@screens/*": [
+        "app/screens/*"
+      ],
+      "@utils/*": [
+        "app/utils/*"
+      ],
+      "@state/*": [
+        "app/state/*"
+      ],
+      "@navigation/*": [
+        "app/navigation/*"
+      ],
+      "@commonComponents/*": [
+        "app/commonComponents/*"
+      ],
+      "@duck/*": [
+        "app/state/ducks/*"
+      ],
+      "@assets/*": [
+        "app/assets/*"
+      ],
+      "@fetch/*": [
+        "app/state/fetch/*"
+      ],
+      "@common/*": [
+        "app/commonComponents/*"
+      ],
+      "@data/*": [
+        "app/data/*"
+      ]
+    }
+  }
+}

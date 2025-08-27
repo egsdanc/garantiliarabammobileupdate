@@ -5,8 +5,8 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
-platform :ios, min_ios_version_supported
-prepare_react_native_project!
+  platform :ios, "15.1"
+  prepare_react_native_project!
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
@@ -15,15 +15,60 @@ if linkage != nil
 end
 
 target 'garantiliarabammobile' do
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-maps', :path => rn_maps_path
+  pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'react-native-maps-generated', :path => rn_maps_path
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
+  use_frameworks! :linkage => :static
   config = use_native_modules!
 
+  pod 'Firebase', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  $RNFirebaseAsStaticFramework = false
+
+  # pod 'EnVerify','1.3.18.1-s'
+
+  # Flags change depending on the env values.
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  post_install do |installer|
+
+  pre_install do |installer|
+    installer.pod_targets.each do |pod|
+      if pod.name.eql?('RNReanimated')
+        def pod.build_type
+          Pod::BuildType.static_library
+        end
+      end
+     end
+   end
+
+  post_install do |installer|  
+
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+        config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ""
+        config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
+        config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
+        config.build_settings['VALID_ARCHS'] = "arm64 x86_64"
+        if target.name == 'react-native-config'
+          config.build_settings['ENVFILE'] = ENVFILES[config.name]
+        end
+        if target.name == 'Alamofire'
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+        else
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.4'
+        end
+      end
+    end
+
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     react_native_post_install(
       installer,
@@ -31,5 +76,30 @@ target 'garantiliarabammobile' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+
+        # Replace @import GoogleMaps; with #import <GoogleMaps/GoogleMaps.h> in specific files
+        specific_files = [
+          "#{Pod::Config.instance.installation_root}/Pods/Google-Maps-iOS-Utils/Sources/GoogleMapsUtilsObjC/include/GMSMarker+GMUClusteritem.h",
+          "#{Pod::Config.instance.installation_root}/Pods/Google-Maps-iOS-Utils/Sources/GoogleMapsUtilsObjC/include/GMUGeoJSONParser.h",
+          "#{Pod::Config.instance.installation_root}/Pods/Google-Maps-iOS-Utils/Sources/GoogleMapsUtilsObjC/include/GMUPolygon.h",
+          "#{Pod::Config.instance.installation_root}/Pods/Google-Maps-iOS-Utils/Sources/GoogleMapsUtilsObjC/include/GMUWeightedLatLng.h",
+          "#{Pod::Config.instance.installation_root}/Pods/GoogleMaps/Maps/Sources/GMSEmpty.h"
+        ]
+    
+        specific_files.each do |file|
+          if File.exist?(file)
+            text = File.read(file)
+            if text.include?("@import GoogleMaps;")
+              new_text = text.gsub("@import GoogleMaps;", "#import <GoogleMaps/GoogleMaps.h>")
+              File.open(file, "w") { |f| f.write(new_text) }
+              puts "🔧 Patched @import in: #{file}"
+            else
+              puts "ℹ️ No @import GoogleMaps; found in: #{file}"
+            end
+          else
+            puts "⚠️ File not found: #{file}"
+          end
+        end
   end
+
 end

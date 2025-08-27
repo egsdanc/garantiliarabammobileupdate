@@ -1,0 +1,102 @@
+{
+  "staticData": [
+    {
+      "key": "garanti",
+      "title": "Garanti",
+      "type": "selectbox",
+      "default": "Seciniz",
+      "options": [
+        {
+          "title": "Var",
+          "value":"var"
+        },
+        {
+          "title": "Yok",
+          "value":"yok"
+        }
+      ]
+    },
+    {
+      "key": "takasli",
+      "title": "Takaslı",
+      "type": "selectbox",
+      "default": "Seciniz",
+      "options": [
+        {
+          "title": "Evet",
+          "value":"evet"
+        },
+        {
+          "title": "Hayir",
+          "value":"hayir"
+
+        }
+      ]
+    },
+    {
+      "key": "kimden",
+      "title": "Kimden",
+      "type": "selectbox",
+      "default": "Seciniz",
+      "options": [
+        {
+          "title": "Sahibinden",
+          "value":"sahibinden"
+        },
+        {
+          "title": "Galeriden",
+          "value":"galeriden"
+        }
+      ]
+    },
+    {
+      "key": "durum",
+      "title": "Arac Durumu",
+      "type": "selectbox",
+      "default": "Seciniz",
+      "options": [
+        {
+          "title": "Sıfır",
+          "value":"sifir"
+        },
+        {
+          "title": "Ikinci El",
+          "value":"ikinciEl"
+        }
+      ]
+    }
+  ],
+  "inputFields": [
+    {
+      "key": "title",
+      "title":"Başlık",
+      "value": null,
+      "isRequired": true
+    },
+    {
+      "key": "description",
+      "title":"Açıklama",
+      "value": null,
+      "isRequired": true
+    },
+    {
+      "key": "link",
+      "title":"Link",
+      "value": null,
+      "isRequired": false
+    },
+    {
+      "key": "price",
+      "title":"Fiyat",
+      "value": null,
+      "isRequired": true
+    },
+    {
+      "key": "km",
+      "title":"Kilometre",
+      "value": null,
+      "isRequired": true
+    }
+  ]
+
+}
