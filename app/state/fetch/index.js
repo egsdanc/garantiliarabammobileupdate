@@ -36,8 +36,10 @@ export const host = `https://${base}/api/`;
 export const baseURL = `${host}`;
 
 const axiosInstance = axios.create({
+  maxContentLength: Infinity,
+  maxBodyLength: Infinity,
+  timeout: 240000,
   baseURL: baseURL, // baseURL'i burada ayarlayabilirsiniz
-  timeout: 30000, // 30 saniye timeout önerilir
 });
 
 axiosInstance.defaults.headers['Content-Type'] = 'application/json';

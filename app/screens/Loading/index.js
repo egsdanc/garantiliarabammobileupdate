@@ -6,7 +6,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { Text, Button } from '@components';
 import { Image } from '../../components/Image';
 import styles from './styles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Block, ErrorLabel } from '../../commonComponents';
 import { setToken } from '../../state/ducks/signIn';
 import { checkToken_action } from '../../state/ducks/checkToken';

@@ -87,6 +87,44 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    tasks.whenTaskAdded { task ->
+    if (task.name == "mergeDebugNativeLibs") {
+        task.dependsOn("copyDebugIconFonts")
+    }
+}
+ afterEvaluate {
+    // Debug için
+    tasks.named("parseDebugLocalResources") {
+        dependsOn("copyDebugIconFonts")
+    }
+    tasks.named("processDebugMainManifest") {
+        dependsOn("copyDebugIconFonts")
+    }
+    tasks.named("compressDebugAssets") {
+        dependsOn("copyDebugIconFonts")
+    }
+    tasks.named("mergeExtDexDebug") {
+        dependsOn("copyDebugIconFonts")
+    }
+    tasks.named("mergeLibDexDebug") {   // 🔥 eksik olan kısım
+        dependsOn("copyDebugIconFonts")
+    }
+    // Release için
+    tasks.named("parseReleaseLocalResources") {
+        dependsOn("copyReleaseIconFonts")
+    }
+    tasks.named("processReleaseMainManifest") {
+        dependsOn("copyReleaseIconFonts")
+    }
+    tasks.named("compressReleaseAssets") {
+        dependsOn("copyReleaseIconFonts")
+    }
+    tasks.named("mergeExtDexRelease") {
+        dependsOn("copyReleaseIconFonts")
+    }
+}
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -140,5 +178,11 @@ configurations.all {
         force 'androidx.core:core:1.16.0'
         force 'androidx.versionedparcelable:versionedparcelable:1.1.1'
         exclude group: 'com.android.support'
+    }
+}
+tasks.whenTaskAdded { task ->
+    if (task.name == "mergeReleaseNativeLibs" ||
+        task.name == "sdkReleaseDependencyData") {
+        task.dependsOn("copyReleaseIconFonts")
     }
 }

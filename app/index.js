@@ -88,7 +88,7 @@ LogBox.ignoreLogs([
 
 export default () => {
   useEffect(() => {
-    StatusBar.setBackgroundColor(BaseColor.primaryColor, true);
+    // StatusBar.setBackgroundColor(BaseColor.primaryColor, true);
   }, []);
   return (
     <Provider store={store}>

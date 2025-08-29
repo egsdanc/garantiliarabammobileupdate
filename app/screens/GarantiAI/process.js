@@ -21,17 +21,14 @@ const GarantiAIProcess = ({ navigation, route }) => {
     const resolve = useCallback(res => {
         //setResult('Kayıt bulundu, araç sayfasına yönlendiriliyorsunuz');
 
-        setTimeout(() => {
          setisloading(false)
          setResult('');
-         navigation.navigate('CarDetail', {ad_code: res?.data.ad_code});
-        }, 2000) 
+         navigation.navigate('GarantiAISuccess', {data: res?.data});
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const reject = useCallback(res => {
         setisloading(false)
-        console.log("rrr",res)
         setResult(res?.message);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

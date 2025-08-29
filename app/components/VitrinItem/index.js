@@ -5,7 +5,6 @@ import {BaseColor} from '@config';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import LinearGradient from 'react-native-linear-gradient';
-import FastImage from "react-native-fast-image";
 export default class VitrinItem extends Component {
   constructor(props) {
     super(props);
@@ -221,8 +220,8 @@ export default class VitrinItem extends Component {
         <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
           {specialCase === true ? (
             <View>
-              <FastImage
-                resizeMode={FastImage.resizeMode.cover}
+              <Image
+                resizeMode="cover"
                 source={{uri: image}}
                 style={[styles.girdImage]}
               />

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
@@ -16,6 +15,7 @@ import {
 } from '@components';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
+// Base64 dönüşümü için React Native'in built-in fetch API'sini kullanacağız
 
 
 import FrontImage from '../../assets/images/shoot-sides/overlays/js/FrontImage.js';
@@ -120,22 +120,22 @@ const GarantiAI = ({ navigation }) => {
   const [token, setToken] = useState(null)
   const [selectedImageIndex, setSelectedImageIndex] = useState(1);
   const [data, setData] = useState([
-    { id: 1, image: Images.shoot_sides.front, shoot: false, shootImage: '' },
-    { id: 2, image: Images.shoot_sides.frontT34Driver, shoot: false, shootImage: '' },
-    { id: 3, image: Images.shoot_sides.frontT34DriverInspect, shoot: false, shootImage: '' },
-    { id: 4, image: Images.shoot_sides.sideDriver, shoot: false, shootImage: '' },
-    { id: 5, image: Images.shoot_sides.sideDriverFrontInspect, shoot: false, shootImage: '' },
-    { id: 6, image: Images.shoot_sides.sideDriverBackInspect, shoot: false, shootImage: '' },
-    { id: 7, image: Images.shoot_sides.backT34Driver, shoot: false, shootImage: '' },
-    { id: 8, image: Images.shoot_sides.backT34DriverInspect, shoot: false, shootImage: '' },
-    { id: 9, image: Images.shoot_sides.back, shoot: false, shootImage: '' },
-    { id: 10, image: Images.shoot_sides.backT34Passenger, shoot: false, shootImage: '' },
-    { id: 11, image: Images.shoot_sides.backT34PassengerInspect, shoot: false, shootImage: '' },
-    { id: 12, image: Images.shoot_sides.sidePassenger, shoot: false, shootImage: '' },
-    { id: 13, image: Images.shoot_sides.sidePassengerBackInspect, shoot: false, shootImage: '' },
-    { id: 14, image: Images.shoot_sides.sidePassengerFrontInspect, shoot: false, shootImage: '' },
-    { id: 15, image: Images.shoot_sides.frontT34Passenger, shoot: false, shootImage: '' },
-    { id: 16, image: Images.shoot_sides.frontT34PassengerInspect, shoot: false, shootImage: '' },
+    { id: 1, image: Images.shoot_sides.front, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 2, image: Images.shoot_sides.frontT34Driver, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 3, image: Images.shoot_sides.frontT34DriverInspect, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 4, image: Images.shoot_sides.sideDriver, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 5, image: Images.shoot_sides.sideDriverFrontInspect, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 6, image: Images.shoot_sides.sideDriverBackInspect, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 7, image: Images.shoot_sides.backT34Driver, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 8, image: Images.shoot_sides.backT34DriverInspect, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 9, image: Images.shoot_sides.back, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 10, image: Images.shoot_sides.backT34Passenger, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 11, image: Images.shoot_sides.backT34PassengerInspect, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 12, image: Images.shoot_sides.sidePassenger, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 13, image: Images.shoot_sides.sidePassengerBackInspect, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 14, image: Images.shoot_sides.sidePassengerFrontInspect, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 15, image: Images.shoot_sides.frontT34Passenger, shoot: false, shootImage: '', shootImageBase64: '' },
+    { id: 16, image: Images.shoot_sides.frontT34PassengerInspect, shoot: false, shootImage: '', shootImageBase64: '' },
   ]);
 
   /** didmount */
@@ -174,15 +174,33 @@ const GarantiAI = ({ navigation }) => {
             <TouchableOpacity
               onPress={() => {
                 if (selectedImageIndex < 17) {
-                  camera.current?.takePhoto().then(photo => {
-                    let newArr = [...data];
-                    newArr[selectedImageIndex - 1].shoot = true;
-                    newArr[selectedImageIndex - 1].shootImage = `file://${photo.path}`;
-                    setData(newArr);
-                    if (selectedImageIndex < 16) {
-                      setSelectedImageIndex(selectedImageIndex + 1)
-                    } else {
-                      //resim upload bitti sonraki sayfaya gecelim.
+                  camera.current?.takePhoto().then(async photo => {
+                    try {
+                      // Fetch ile dosyayı oku ve base64'e çevir
+                      const response = await fetch(`file://${photo.path}`);
+                      const blob = await response.blob();
+                      
+                      // Blob'u base64'e çevirmek için FileReader kullan
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        const base64Data = reader.result.split(',')[1]; // data:image/jpeg;base64, kısmını çıkar
+                        let newArr = [...data];
+                        newArr[selectedImageIndex - 1].shoot = true;
+                        newArr[selectedImageIndex - 1].shootImage = `file://${photo.path}`;
+                        newArr[selectedImageIndex - 1].shootImageBase64 = base64Data;
+                        setData(newArr);
+                        
+                        if (selectedImageIndex < 16) {
+                          setSelectedImageIndex(selectedImageIndex + 1)
+                        } else {
+                          //resim upload bitti sonraki sayfaya gecelim.
+                        }
+                      };
+                      reader.readAsDataURL(blob);
+                      
+                    } catch (error) {
+                      console.error('Base64 dönüşümü sırasında hata:', error);
+                      Alert.alert('Hata', 'Fotoğraf işlenirken bir hata oluştu.');
                     }
                   })
                 }

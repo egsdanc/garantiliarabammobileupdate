@@ -1,13 +1,6 @@
 // components/Image/index.js
 import React, { memo, useCallback } from 'react';
-import FastImage from 'react-native-fast-image';
-
-const resizeModeMap = {
-  cover: FastImage.resizeMode.cover,
-  contain: FastImage.resizeMode.contain,
-  stretch: FastImage.resizeMode.stretch,
-  center: FastImage.resizeMode.center,
-};
+import { Image as RNImage } from 'react-native';
 
 export const Image = memo(({
   style,
@@ -17,7 +10,6 @@ export const Image = memo(({
   onLoad,
   onLoadStart,
   onLoadEnd,
-  onProgress,
   source,
   ...rest
 }) => {
@@ -40,39 +32,45 @@ export const Image = memo(({
     onLoadEnd?.();
   }, [onLoadEnd]);
 
-  const handleProgress = useCallback((event) => {
-    onProgress?.(event);
-  }, [onProgress]);
-
   // Source validation
   if (!source) {
     if (__DEV__) {
       console.warn('Image: source prop is required');
     }
+    
+    // Fallback source varsa onu kullan
+    if (fallbackSource) {
+      return (
+        <RNImage
+          style={style}
+          source={fallbackSource}
+          resizeMode={resizeMode}
+          onError={handleError}
+          onLoad={handleLoad}
+          onLoadStart={handleLoadStart}
+          onLoadEnd={handleLoadEnd}
+          {...rest}
+        />
+      );
+    }
+    
     return null;
   }
 
   return (
-    <FastImage
+    <RNImage
       style={style}
       source={source}
-      fallback={fallbackSource}
-      resizeMode={resizeModeMap[resizeMode] || FastImage.resizeMode.cover}
+      resizeMode={resizeMode}
       onError={handleError}
       onLoad={handleLoad}
       onLoadStart={handleLoadStart}
       onLoadEnd={handleLoadEnd}
-      onProgress={handleProgress}
       {...rest}
     />
   );
 });
 
 Image.displayName = 'Image';
-
-// Default props
-Image.defaultProps = {
-  resizeMode: 'cover',
-};
 
 export default Image;

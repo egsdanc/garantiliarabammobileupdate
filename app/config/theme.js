@@ -7,7 +7,6 @@ import {BaseColor} from './color';
 export const BaseStyle = StyleSheet.create({
   tabBar: {
     borderTopWidth: 1,
-    marginBottom: 20,
   },
   bodyPaddingDefault: {
     paddingHorizontal: 20,

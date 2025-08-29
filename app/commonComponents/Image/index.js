@@ -1,34 +1,20 @@
 import React from "react";
-import {StyleSheet} from "react-native";
+import { StyleSheet, Image as RNImage } from "react-native";
 import PropTypes from "prop-types";
-import FastImage from "react-native-fast-image";
 
-export const Image = ({style, resizeMode, ...rest}) => {
-  let resize = FastImage.resizeMode.cover;
-  switch (resizeMode) {
-    case "contain":
-      resize = FastImage.resizeMode.contain;
-      break;
-    case "stretch":
-      resize = FastImage.resizeMode.stretch;
-      break;
-    case "center":
-      resize = FastImage.resizeMode.center;
-      break;
-    default:
-      break;
-  }
+export const Image = ({ style, resizeMode = "cover", ...rest }) => {
   return (
-    <FastImage
+    <RNImage
       style={StyleSheet.flatten([style && style])}
+      resizeMode={resizeMode}
       {...rest}
-      resizeMode={resize}
     />
   );
 };
 
 Image.propTypes = {
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  resizeMode: PropTypes.oneOf(["cover", "contain", "stretch", "center", "repeat"])
 };
 
 Image.defaultProps = {
